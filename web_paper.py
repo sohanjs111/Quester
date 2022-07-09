@@ -7,7 +7,6 @@ Created on Sat Jul  9 13:32:16 2022
 import openai
 import wget
 import pathlib
-# import numpy as np
 import glob
 import re
 
@@ -51,8 +50,12 @@ def showPaperSummary(paperContent):
         text += page.extract_text()
 
     print("The full text of the paper is : ", text)
-    text = re.search("[\s\S]*?(?=INTRODUCTION)", text).group()
-    print("The text after 40 lines is : ", text)
+    textBegin = re.search("[\s\S]*?(?=INTRODUCTION|INTRODUCTIONS)", text).group()
+    print("The text before Introduction is : ", textBegin)
+    #select the text after the conclusion
+    textEnd = re.search("(?=CONCLUSION\n|CONCLUSIONS\n)[\s\S]*", text).group()
+    print("The text after Conclusion is : ", textEnd)
+    text = textBegin + textEnd
     text = cut(text)
     text += tldr_tag
     print("The AI will summarize the text below:", text)
