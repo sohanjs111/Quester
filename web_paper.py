@@ -36,14 +36,12 @@ search_for  = "game theory"
 ## how many number of pdf downloads are needed ? 
 number_of_pdf_downloads = 5
 
+
+
+
 #
 # ---------------------- PART 1 ----------------------
 # Comment from here
-'''
-## Using chrome webdriver, (webdriver needs to be downloaded separately) 
-## Select the path to the chromedriver
-driver = webdriver.Chrome(executable_path='/Users/SET_PATH/chromedriver')
-
 #
 #
 #
@@ -51,6 +49,8 @@ driver = webdriver.Chrome(executable_path='/Users/SET_PATH/chromedriver')
 #
 # Webscrapping 
 ## Webdriver for selenium
+## Using chrome webdriver,  
+driver = webdriver.Chrome(executable_path='driver/chromedriver')
 driver.implicitly_wait(0.5)
 driver.maximize_window()
 ## url in use 
@@ -99,7 +99,7 @@ for i in range(number_of_pdf_downloads):
 
 print("Successfully downloaded all the files as requested")
 
-'''
+
 ##  Stop commenting to test the part 2 of the progam
 #
 #
