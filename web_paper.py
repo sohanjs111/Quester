@@ -50,14 +50,22 @@ def showPaperSummary(paperContent):
         text += page.extract_text()
 
     print("The full text of the paper is : ", text)
-    textBegin = re.search("[\s\S]*?(?=INTRODUCTION|INTRODUCTIONS)", text).group()
+    try:
+        textBegin = re.search("[\s\S]*?(?=INTRODUCTION|INTRODUCTIONS)", text).group()
+    except AttributeError:
+        textBegin = re.search("[\s\S]*?(?=INTRODUCTION|INTRODUCTIONS)", text)
     print("The text before Introduction is : ", textBegin)
     #select the text after the conclusion
-    textEnd = re.search("(?=CONCLUSION\n|CONCLUSIONS\n)[\s\S]*", text).group()
+    try:
+        textEnd = re.search("(?=CONCLUSION\n|CONCLUSIONS\n)[\s\S]*", text).group()
+    except AttributeError:
+        textEnd = re.search("(?=CONCLUSION\n|CONCLUSIONS\n)[\s\S]*", text)
     print("The text after Conclusion is : ", textEnd)
-    text = textBegin + textEnd
-    text = cut(text)
-    text += tldr_tag
+    if textBegin is not None and textEnd is not None:
+        text = textBegin + textEnd
+    if text is not None:        
+        text = cut(text)
+        text += tldr_tag
     print("The AI will summarize the text below:", text)
     response = openai.Completion.create(model="text-davinci-002",
                                         prompt=text,
